@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_monetization_on_black_24dp"/>
+            android:src="@drawable/ic_monetization_on_black_24dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -29,171 +31,263 @@
             android:gravity="center"
             android:text="Конвертер"
             android:textColor="#ffffff"
-            android:textSize="27dp"/>
+            android:textSize="27dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Банк принимает"
-            android:textColor="#A3A3A3"
-            android:textSize="25dp"/>
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Банк принимает"
+                android:textColor="#A3A3A3"
+                android:textSize="25dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
-                    android:text="Выберите валюту"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:layout_weight="1"/>
-                <Spinner
-                    android:id="@+id/spinnerTakeCurrency"
-                    android:entries="@array/list_of_сurrencies"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Выберите валюту"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTakeCurrency"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:entries="@array/list_of_сurrencies" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Введите число"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/editTextTakeQuantity"
+                        android:layout_width="match_parent"
+                        android:textColor="#ffffff"
+                        android:backgroundTint="#A3A3A3"
+                        android:layout_marginRight="20dp"
+                        android:hint="Ввод"
+
+                        android:textColorHint="#A3A3A3"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"/>
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Банк отдаёт"
+                android:textColor="#A3A3A3"
+                android:textSize="25dp" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="Введите число"
-                    android:textColor="#ffffff"
                     android:layout_marginLeft="20dp"
-                    android:textSize="20dp"
-                    android:layout_weight="1"/>
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.5"/>
-            </LinearLayout>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Банк отдаёт"
-            android:textColor="#A3A3A3"
-            android:textSize="25dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Выберите валюту"
                     android:textColor="#ffffff"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"/>
+                    android:textSize="20dp" />
+
                 <Spinner
                     android:id="@+id/spinnerGiveCurrency"
-                    android:entries="@array/list_of_сurrencies"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:layout_height="wrap_content" />
+                    android:entries="@array/list_of_сurrencies" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Текущий курс"
                     android:textColor="#ffffff"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="20dp"
-                    android:layout_weight="1"/>
-                <Space
+                    android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/textViewCourse"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.5"/>
+                    android:textSize="20dp"
+                    android:textColor="#A3A3A3"
+                    android:text="67"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:layout_weight="1.5" />
             </LinearLayout>
 
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonResult"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/style_7"
+            android:layout_marginBottom="20dp"
             android:text="Результат"
             android:textColor="#A3A3A3"
-            android:textSize="25dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/textViewEnter"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="26dp"
-                android:layout_gravity="top"
+            <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="167"
-              />
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewEnter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="167"
+                    android:textColor="#ffffff"
+                    android:textSize="26dp" />
 
+                <TextView
+                    android:id="@+id/polosa"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="26dp" />
 
-            <TextView
-                android:id="@+id/textViewResult"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="26dp"
+                <TextView
+                    android:id="@+id/textViewResultAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="2.38"
+                    android:textColor="#ffffff"
+                    android:textSize="26dp" />
+
+            </LinearLayout>
+            <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2.38"
-                android:layout_gravity="top"
-                />
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="RUB"
+                    android:textColor="#A3A3A3"
+                    android:textSize="20dp" />
+                <Button
+                    android:id="@+id/space"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/style_7"
+                    android:textColor="#ffffff"
+                    android:textSize="26dp" />
+
+                <TextView
+                    android:id="@+id/textViewTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="USD"
+                    android:textColor="#A3A3A3"
+                    android:textSize="20dp" />
 
 
+
+            </LinearLayout>
 
         </LinearLayout>
+  </LinearLayout>
 
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
 

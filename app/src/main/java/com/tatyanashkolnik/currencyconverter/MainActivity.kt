@@ -4,11 +4,10 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.properties.Delegates
@@ -17,14 +16,26 @@ class MainActivity : Activity() {
 
     private lateinit var editTextTakeQuantity : EditText
     private lateinit var textViewResultAmount : TextView
+    private lateinit var textViewEnter : TextView
+    private lateinit var textViewCourse : TextView
+    private lateinit var textViewFrom : TextView
+    private lateinit var textViewTo : TextView
+
+    private lateinit var buttonResult : Button
 
     private lateinit var spinnerTakeCurrency : Spinner
     private lateinit var spinnerGiveCurrency : Spinner
 
     private lateinit var map : MutableMap<String, Double>
 
-    private var giveCurrency by Delegates.notNull<Double>()
-    private var takeCurrency by Delegates.notNull<Double>()
+    private var giveCurrency : Double = 0.0
+    private var takeCurrency : Double = 0.0
+
+    private var calculatedResult : Double = 0.0
+    private var quantity : Double = 0.0
+
+    private var isFromUSD : Boolean = false
+    private var isToUSD : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +44,34 @@ class MainActivity : Activity() {
         spinnerTakeCurrency = findViewById(R.id.spinnerTakeCurrency)
         spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
 
-        //textViewResultAmount = findViewById(R.id.textViewResultAmount)
-        //editTextTakeQuantity = findViewById()
+        editTextTakeQuantity = findViewById(R.id.editTextTakeQuantity)  // ввод количества переводимой валюты
+
+        textViewCourse = findViewById(R.id.textViewCourse)  // курс
+
+        textViewEnter = findViewById(R.id.textViewEnter)  // внизу сколько ввели
+        textViewResultAmount = findViewById(R.id.textViewResultAmount)  // внизу сколько вывели TV результат перевода
+
+        textViewFrom = findViewById(R.id.textViewFrom)  // внизу из какой валюты переводим
+        textViewTo = findViewById(R.id.textViewTo)  // внизу в какую валюту переводим
+
+        buttonResult = findViewById(R.id.buttonResult)
 
         val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
         map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
+
+        // когда нажимается кнопка
+
+        quantity = editTextTakeQuantity.toString().toDouble()
 
 
         spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 var resultText : String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
-                giveCurrency = getRequestToDictionary(resultText) // из какой валюты
-                Log.i("Result", "give" + giveCurrency.toString())
+                if (resultText == "USD") {isFromUSD = true}
+                else {isFromUSD = false}
+                takeCurrency = getRequestToDictionary(resultText) // из какой валюты
+                Log.i("Result", "take" + takeCurrency.toString())
 
                 //ПРОПИСАТЬ ИЗМЕНЕНИЯ TEXTVIEW ВНИЗУ
 
@@ -56,8 +82,10 @@ class MainActivity : Activity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 var resultText: String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
-                takeCurrency = getRequestToDictionary(resultText) // в какую валюту
-                Log.i("Result", "take" + takeCurrency.toString())
+                if (resultText == "USD") {isToUSD = true}
+                else {isToUSD = false}
+                giveCurrency = getRequestToDictionary(resultText) // в какую валюту
+                Log.i("Result", "give" + giveCurrency.toString())
 
 
                 //ПРОПИСАТЬ ИЗМЕНЕНИЯ TEXTVIEW ВНИЗУ
@@ -65,6 +93,8 @@ class MainActivity : Activity() {
 
             }
         }
+        calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity, isFromUSD, isToUSD)
+        textViewResultAmount.text = calculatedResult.toString()
 
     }
 
@@ -113,6 +143,15 @@ class MainActivity : Activity() {
             "Юань" -> result = "CNY"
             "Гривна" -> result = "UAH"
         }
+        return result
+    }
+
+    fun calculateAmount (from : Double, to : Double, quantity : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
+        var result : Double
+        if(from == to) {result = quantity}
+        else if(fromUSD == true) {result = quantity * to}
+        else if(toUSD == true) {result = quantity * (1 / from)}
+        else {result = quantity * (1 / from) * to}
         return result
     }
 }
