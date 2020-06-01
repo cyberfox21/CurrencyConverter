@@ -36,16 +36,25 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 var resultText : String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
-                giveCurrency = getRequestToDictionary(resultText)
+                giveCurrency = getRequestToDictionary(resultText) // из какой валюты
                 Log.i("Result", "give" + giveCurrency.toString())
+
+                //ПРОПИСАТЬ ИЗМЕНЕНИЯ TEXTVIEW ВНИЗУ
+
+
             }
         }
         spinnerGiveCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 var resultText: String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
-                takeCurrency = getRequestToDictionary(resultText)
+                takeCurrency = getRequestToDictionary(resultText) // в какую валюту
                 Log.i("Result", "take" + takeCurrency.toString())
+
+
+                //ПРОПИСАТЬ ИЗМЕНЕНИЯ TEXTVIEW ВНИЗУ
+
+
             }
         }
 
