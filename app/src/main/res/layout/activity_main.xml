@@ -8,6 +8,7 @@
 
     <Spinner
         android:id="@+id/spinnerTakeCurrency"
+        android:entries="@array/list_of_сurrencies"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -47,6 +48,7 @@
 
     <Spinner
         android:id="@+id/spinnerGiveCurrency"
+        android:entries="@array/list_of_сurrencies"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"

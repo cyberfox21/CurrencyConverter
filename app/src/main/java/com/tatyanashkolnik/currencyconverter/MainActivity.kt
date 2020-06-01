@@ -16,9 +16,10 @@ class MainActivity : AppCompatActivity() {
         val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
         var map : MutableMap<String, Double> = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
 
-        map.forEach { it ->
-            Log.i("Result", "$it")
-        }
+//        Проверка
+//        map.forEach { it ->
+//            Log.i("Result", "$it")
+//        }
 
     }
 
@@ -50,6 +51,10 @@ class MainActivity : AppCompatActivity() {
             map[lstKeysValues.get(i)] = (lstKeysValues.get(i+1)).toDouble()
         }
         return map
+    }
+
+    fun getRequest (){
+
     }
 }
 

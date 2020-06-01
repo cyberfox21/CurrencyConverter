@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">CurrencyConverter</string>
     <string name="URL_AND_TANIUSHIN_API_KEY">https://openexchangerates.org/api/latest.json?app_id=dd182aaa13c14ecd9bcccc4c4b2f4527</string>
+    <string-array name="list_of_сurrencies">
+        <item>Рубль</item>
+        <item>Доллар</item>
+        <item>Евро</item>
+        <item>Фунт</item>
+        <item>Юань</item>
+        <item>Гривна</item>
+    </string-array>
 </resources>
