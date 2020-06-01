@@ -66,12 +66,11 @@ class MainActivity : Activity() {
         buttonResult.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
                 quantity = editTextTakeQuantity.text.toString().toDouble()
+                textViewEnter.text = quantity.toString()
                 calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity, isFromUSD, isToUSD)
                 textViewResultAmount.text = String.format("%.2f", calculatedResult)
             }
         })
-
-
 
         spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -93,6 +92,9 @@ class MainActivity : Activity() {
                 giveCurrency = getRequestToDictionary(resultText) // в какую валюту
                 Log.i("Result", "give" + giveCurrency.toString())
                 textViewTo.text = returnTextToUser(resultText)
+
+
+                // Прописать, чтобы менялся курс
             }
         }
     }
