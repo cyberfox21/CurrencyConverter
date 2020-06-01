@@ -1,17 +1,22 @@
 package com.tatyanashkolnik.currencyconverter
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
 import android.view.View
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.properties.Delegates
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
+
+    private lateinit var editTextTakeQuantity : EditText
+    private lateinit var textViewResultAmount : TextView
 
     private lateinit var spinnerTakeCurrency : Spinner
     private lateinit var spinnerGiveCurrency : Spinner
@@ -23,10 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main)
 
         spinnerTakeCurrency = findViewById(R.id.spinnerTakeCurrency)
         spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
+
+        //textViewResultAmount = findViewById(R.id.textViewResultAmount)
+        //editTextTakeQuantity = findViewById()
 
         val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
         map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
