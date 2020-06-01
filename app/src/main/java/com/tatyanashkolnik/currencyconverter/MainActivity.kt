@@ -54,14 +54,23 @@ class MainActivity : Activity() {
         textViewFrom = findViewById(R.id.textViewFrom)  // внизу из какой валюты переводим
         textViewTo = findViewById(R.id.textViewTo)  // внизу в какую валюту переводим
 
+        textViewFrom.text = "Рубль"
+        textViewTo.text = "Рубль"
+
         buttonResult = findViewById(R.id.buttonResult)
 
         val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
         map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
 
         // когда нажимается кнопка
+        buttonResult.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                quantity = editTextTakeQuantity.text.toString().toDouble()
+                calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity, isFromUSD, isToUSD)
+                textViewResultAmount.text = String.format("%.2f", calculatedResult)
+            }
+        })
 
-        quantity = editTextTakeQuantity.toString().toDouble()
 
 
         spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -72,10 +81,7 @@ class MainActivity : Activity() {
                 else {isFromUSD = false}
                 takeCurrency = getRequestToDictionary(resultText) // из какой валюты
                 Log.i("Result", "take" + takeCurrency.toString())
-
-                //ПРОПИСАТЬ ИЗМЕНЕНИЯ TEXTVIEW ВНИЗУ
-
-
+                textViewFrom.text = returnTextToUser(resultText)
             }
         }
         spinnerGiveCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -86,16 +92,9 @@ class MainActivity : Activity() {
                 else {isToUSD = false}
                 giveCurrency = getRequestToDictionary(resultText) // в какую валюту
                 Log.i("Result", "give" + giveCurrency.toString())
-
-
-                //ПРОПИСАТЬ ИЗМЕНЕНИЯ TEXTVIEW ВНИЗУ
-
-
+                textViewTo.text = returnTextToUser(resultText)
             }
         }
-        calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity, isFromUSD, isToUSD)
-        textViewResultAmount.text = calculatedResult.toString()
-
     }
 
     inner class AsyncTaskGetCurrentRatesJson : AsyncTask <String, String, String>() {
@@ -142,6 +141,18 @@ class MainActivity : Activity() {
             "Фунт" -> result = "GBP"
             "Юань" -> result = "CNY"
             "Гривна" -> result = "UAH"
+        }
+        return result
+    }
+    fun returnTextToUser (string : String) : String {
+        var result : String = ""
+        when (string) {
+             "RUB" -> result = "Рубль"
+             "USD"-> result = "Доллар"
+             "EUR" -> result = "Евро"
+             "GBP" -> result = "Фунт"
+             "CNY" -> result = "Юань"
+             "UAH" -> result = "Гривна"
         }
         return result
     }
