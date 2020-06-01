@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">CurrencyConverter</string>
-    <string name="TANIUSHIN_API_KEY">dd182aaa13c14ecd9bcccc4c4b2f4527</string>
+    <string name="URL_AND_TANIUSHIN_API_KEY">https://openexchangerates.org/api/latest.json?app_id=dd182aaa13c14ecd9bcccc4c4b2f4527</string>
 </resources>
