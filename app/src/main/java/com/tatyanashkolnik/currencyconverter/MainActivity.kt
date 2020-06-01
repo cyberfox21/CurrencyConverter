@@ -4,22 +4,50 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Spinner
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var spinnerTakeCurrency : Spinner
+    private lateinit var spinnerGiveCurrency : Spinner
+
+    private lateinit var map : MutableMap<String, Double>
+
+    private var giveCurrency by Delegates.notNull<Double>()
+    private var takeCurrency by Delegates.notNull<Double>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
-        var map : MutableMap<String, Double> = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
+        spinnerTakeCurrency = findViewById(R.id.spinnerTakeCurrency)
+        spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
 
-//        Проверка
-//        map.forEach { it ->
-//            Log.i("Result", "$it")
-//        }
+        val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
+        map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
+
+
+        spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var resultText : String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
+                giveCurrency = getRequestToDictionary(resultText)
+                Log.i("Result", "give" + giveCurrency.toString())
+            }
+        }
+        spinnerGiveCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var resultText: String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
+                takeCurrency = getRequestToDictionary(resultText)
+                Log.i("Result", "take" + takeCurrency.toString())
+            }
+        }
 
     }
 
@@ -53,8 +81,22 @@ class MainActivity : AppCompatActivity() {
         return map
     }
 
-    fun getRequest (){
+    fun getRequestToDictionary (text : String) : Double {
+        var result : Double = map.getValue(text)
+        return result
+    }
 
+    fun returnTextToRequest (string : String) : String {
+        var result : String = ""
+        when (string) {
+            "Рубль" -> result = "RUB"
+            "Доллар" -> result = "USD"
+            "Евро" -> result = "EUR"
+            "Фунт" -> result = "GBP"
+            "Юань" -> result = "CNY"
+            "Гривна" -> result = "UAH"
+        }
+        return result
     }
 }
 
