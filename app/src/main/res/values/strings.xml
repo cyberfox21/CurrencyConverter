@@ -10,4 +10,5 @@
         <item>Гривна</item>
     </string-array>
     <string name="defaultText">Рубль</string>
+    <string name="extended_result">Расширенный результат</string>
 </resources>
