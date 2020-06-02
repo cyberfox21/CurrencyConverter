@@ -22,6 +22,7 @@ class MainActivity : Activity() {
     private lateinit var textViewTo : TextView
 
     private lateinit var buttonResult : Button
+    private lateinit var buttonMoreDetails : Button
 
     private lateinit var spinnerTakeCurrency : Spinner
     private lateinit var spinnerGiveCurrency : Spinner
@@ -32,7 +33,7 @@ class MainActivity : Activity() {
     private var takeCurrency : Double = 0.0
 
     private var calculatedResult : Double = 0.0
-    private var quantity : Double? = null
+    private var quantity : Double = 1.0
 
     private var isFromUSD : Boolean = false
     private var isToUSD : Boolean = false
@@ -60,19 +61,25 @@ class MainActivity : Activity() {
         textViewTo.text = defaultText
 
         buttonResult = findViewById(R.id.buttonResult)
+        buttonMoreDetails = findViewById(R.id.buttonMoreDetails)
 
         val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
         map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
 
         buttonResult.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
-                if(quantity == null) {quantity = 1.0}
-                else {
-                    quantity = editTextTakeQuantity.text.toString().toDouble()
+                if(quantity != null) {
+                    if(editTextTakeQuantity.text.toString().isEmpty()) {quantity = 1.0} // Если пользователь ничего не ввёл
+                    else{quantity = editTextTakeQuantity.text.toString().toDouble()}
                     textViewEnter.text = quantity.toString()
                     calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity!!.toDouble(), isFromUSD, isToUSD)
                     textViewResultAmount.text = String.format("%.2f", calculatedResult)
                 }
+            }
+        })
+        buttonMoreDetails.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+
             }
         })
         spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
