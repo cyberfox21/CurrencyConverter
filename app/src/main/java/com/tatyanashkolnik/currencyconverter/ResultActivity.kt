@@ -5,12 +5,24 @@ import android.os.Bundle
 
 class ResultActivity : Activity() {
 
-    private var name = resources.getStringArray(R.array.list_of_сurrencies)
+    private lateinit var arrayString : Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.result)
+        arrayString = resources.getStringArray(R.array.list_of_сurrencies)
+
+
+        ///// ПОЛУЧИТЬ ИНТЕНТ
     }
+
+
+
+
+
+    //// СКОПИРОВАТЬ ФУНКЦИЮ ПЕРЕВОДА
+
+
 
 
     private fun generateList(size : Int) : List<Card> {
