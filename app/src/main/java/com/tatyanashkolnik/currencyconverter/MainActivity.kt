@@ -88,7 +88,7 @@ class MainActivity : Activity() {
                 if (resultText == "USD") {isFromUSD = true}
                 else {isFromUSD = false}
                 takeCurrency = getRequestToDictionary(resultText) // из какой валюты
-                Log.i("Result", "take" + takeCurrency.toString())
+                Log.i("ResultActivity", "take" + takeCurrency.toString())
                 textViewFrom.text = returnTextToUser(resultText)
                 textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
             }
@@ -100,7 +100,7 @@ class MainActivity : Activity() {
                 if (resultText == "USD") {isToUSD = true}
                 else {isToUSD = false}
                 giveCurrency = getRequestToDictionary(resultText) // в какую валюту
-                Log.i("Result", "give" + giveCurrency.toString())
+                Log.i("ResultActivity", "give" + giveCurrency.toString())
                 textViewTo.text = returnTextToUser(resultText)
                 textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
             }
