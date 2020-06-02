@@ -9,4 +9,5 @@
         <item>Юань</item>
         <item>Гривна</item>
     </string-array>
+    <string name="defaultText">Рубль</string>
 </resources>

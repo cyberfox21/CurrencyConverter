@@ -32,10 +32,12 @@ class MainActivity : Activity() {
     private var takeCurrency : Double = 0.0
 
     private var calculatedResult : Double = 0.0
-    private var quantity : Double = 0.0
+    private var quantity : Double? = null
 
     private var isFromUSD : Boolean = false
     private var isToUSD : Boolean = false
+
+    private var defaultText : String = "Рубль"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,21 +56,23 @@ class MainActivity : Activity() {
         textViewFrom = findViewById(R.id.textViewFrom)  // внизу из какой валюты переводим
         textViewTo = findViewById(R.id.textViewTo)  // внизу в какую валюту переводим
 
-        textViewFrom.text = "Рубль"
-        textViewTo.text = "Рубль"
+        textViewFrom.text = defaultText
+        textViewTo.text = defaultText
 
         buttonResult = findViewById(R.id.buttonResult)
 
         val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
         map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
 
-        // когда нажимается кнопка
         buttonResult.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
-                quantity = editTextTakeQuantity.text.toString().toDouble()
-                textViewEnter.text = quantity.toString()
-                calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity, isFromUSD, isToUSD)
-                textViewResultAmount.text = String.format("%.2f", calculatedResult)
+                if(quantity == null) {quantity = 1.0}
+                else {
+                    quantity = editTextTakeQuantity.text.toString().toDouble()
+                    textViewEnter.text = quantity.toString()
+                    calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity!!.toDouble(), isFromUSD, isToUSD)
+                    textViewResultAmount.text = String.format("%.2f", calculatedResult)
+                }
             }
         })
 
@@ -81,6 +85,7 @@ class MainActivity : Activity() {
                 takeCurrency = getRequestToDictionary(resultText) // из какой валюты
                 Log.i("Result", "take" + takeCurrency.toString())
                 textViewFrom.text = returnTextToUser(resultText)
+                textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
             }
         }
         spinnerGiveCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -92,13 +97,10 @@ class MainActivity : Activity() {
                 giveCurrency = getRequestToDictionary(resultText) // в какую валюту
                 Log.i("Result", "give" + giveCurrency.toString())
                 textViewTo.text = returnTextToUser(resultText)
-
-
-                // Прописать, чтобы менялся курс
+                textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
             }
         }
     }
-
     inner class AsyncTaskGetCurrentRatesJson : AsyncTask <String, String, String>() {
         override fun doInBackground(vararg url: String?): String {
             var text: String
@@ -112,7 +114,6 @@ class MainActivity : Activity() {
             return text
         }
     }
-
     fun getDictionary (request : String) : MutableMap<String, Double>{
         val last = request.substringAfter("rates\": {")
         val beforeLast = last.substringBeforeLast("}")
@@ -128,12 +129,10 @@ class MainActivity : Activity() {
         }
         return map
     }
-
     fun getRequestToDictionary (text : String) : Double {
         var result : Double = map.getValue(text)
         return result
     }
-
     fun returnTextToRequest (string : String) : String {
         var result : String = ""
         when (string) {
@@ -158,13 +157,20 @@ class MainActivity : Activity() {
         }
         return result
     }
-
     fun calculateAmount (from : Double, to : Double, quantity : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
         var result : Double
         if(from == to) {result = quantity}
         else if(fromUSD == true) {result = quantity * to}
         else if(toUSD == true) {result = quantity * (1 / from)}
         else {result = quantity * (1 / from) * to}
+        return result
+    }
+    fun calculateCourse (from: Double, to : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
+        var result : Double
+        if(from == to) {result = 1.00}
+        else if(fromUSD == true) {result = to}
+        else if(toUSD == true) {result = 1 * (1 / from)}
+        else {result = 1 * (1 / from) * to}
         return result
     }
 }
