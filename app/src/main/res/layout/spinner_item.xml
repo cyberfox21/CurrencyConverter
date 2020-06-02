@@ -2,6 +2,8 @@
 <TextView android:id="@+id/custom_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/white"
-    android:background="@color/forSpinner"
+    android:textColor="#D5D5D5"
+    android:padding="7dp"
+    android:textSize="15dp"
+    android:background="@drawable/style_8"
     xmlns:android="http://schemas.android.com/apk/res/android" />
