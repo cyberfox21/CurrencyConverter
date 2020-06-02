@@ -23,7 +23,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:layout_toBottomOf="@+id/fromText"
+            android:layout_alignTop="@+id/fromText"
             android:text="Из чего (сколько)" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:layout_toRightOf="@id/fromText"
-            android:layout_toBottomOf="@+id/toText"
+            android:layout_alignTop="@+id/toText"
             android:text="Во что (сколько)" />
 
 
