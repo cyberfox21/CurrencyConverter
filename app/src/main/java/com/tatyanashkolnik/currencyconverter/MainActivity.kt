@@ -68,13 +68,11 @@ class MainActivity : Activity() {
 
         buttonResult.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
-                if(quantity != null) {
-                    if(editTextTakeQuantity.text.toString().isEmpty()) {quantity = 1.0} // Если пользователь ничего не ввёл
-                    else{quantity = editTextTakeQuantity.text.toString().toDouble()}
-                    textViewEnter.text = quantity.toString()
-                    calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity!!.toDouble(), isFromUSD, isToUSD)
-                    textViewResultAmount.text = String.format("%.2f", calculatedResult)
-                }
+                if(editTextTakeQuantity.text.toString().isEmpty()) {quantity = 1.0} // Если пользователь ничего не ввёл
+                else{quantity = editTextTakeQuantity.text.toString().toDouble()}
+                textViewEnter.text = quantity.toString()
+                calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity.toDouble(), isFromUSD, isToUSD)
+                textViewResultAmount.text = String.format("%.2f", calculatedResult)
             }
         })
         buttonMoreDetails.setOnClickListener(object: View.OnClickListener {
