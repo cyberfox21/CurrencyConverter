@@ -99,6 +99,8 @@ class MainActivity : Activity() {
                 textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
             }
         }
+        spinnerTakeCurrency.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.list_of_сurrencies))
+        spinnerGiveCurrency.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.list_of_сurrencies))
     }
     inner class AsyncTaskGetCurrentRatesJson : AsyncTask <String, String, String>() {
         override fun doInBackground(vararg url: String?): String {
