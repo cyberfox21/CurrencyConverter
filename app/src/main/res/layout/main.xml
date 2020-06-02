@@ -267,6 +267,7 @@
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:visibility="invisible"
                     android:background="#00000000"
                     android:text="БОЛЬШЕ"
                     android:textColor="#FFFFFF"

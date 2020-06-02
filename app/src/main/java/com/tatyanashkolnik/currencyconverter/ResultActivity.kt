@@ -10,4 +10,19 @@ class ResultActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.result)
     }
+
+    private fun generateList(size : Int) : List<Card> {
+        val list = ArrayList<Card>()
+
+        for(i in 0 until size) {
+
+
+            //val item = Card( parametres )
+
+
+            //list += item
+
+        }
+        return list
+    }
 }

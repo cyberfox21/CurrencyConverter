@@ -73,6 +73,7 @@ class MainActivity : Activity() {
                 textViewEnter.text = quantity.toString()
                 calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity.toDouble(), isFromUSD, isToUSD)
                 textViewResultAmount.text = String.format("%.2f", calculatedResult)
+                buttonMoreDetails.visibility = View.VISIBLE
             }
         })
         buttonMoreDetails.setOnClickListener(object: View.OnClickListener {
