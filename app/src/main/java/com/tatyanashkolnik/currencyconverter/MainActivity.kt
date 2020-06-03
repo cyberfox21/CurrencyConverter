@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
+import android.provider.SyncStateContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -84,8 +85,9 @@ class MainActivity : Activity() {
             override fun onClick(v: View?) {
                 val toResultActivity = Intent(this@MainActivity, ResultActivity::class.java)
                 //if (a > b) a else b
-                intent.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
-                intent.putExtra("from", resultText)
+//                intent.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
+//                intent.putExtra("from", resultText)
+//                intent.putExtra(SyncStateContract.Constants.STRINGS_MAP, map);
 
                 // ПЕРЕДАТЬ САМ    MAP
 
