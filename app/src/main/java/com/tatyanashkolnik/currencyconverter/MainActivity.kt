@@ -92,19 +92,7 @@ class MainActivity : Activity() {
                 toResultActivity.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
                 toResultActivity.putExtra("from", resultText)
                 toResultActivity.putExtra("map", map)
-
                 startActivity(toResultActivity)
-
-
-
-
-
-
-
-                // ПЕРЕДАТЬ САМ    MAP
-
-
-                //startActivity(toResultActivity)
             }
         })
         spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
