@@ -18,9 +18,9 @@ class ResultActivity : Activity() {
 
         ///// ПОЛУЧИТЬ ИНТЕНТ
 
-        //fromCurrency = intent.getStringExtra("from").toString()
-        //fromAmount = intent.getDoubleExtra("quantity", 1.0)
-        //map = intent.getSerializableExtra("map") as HashMap<String, Double>
+        fromCurrency = intent.getStringExtra("from").toString()
+        fromAmount = intent.getDoubleExtra("quantity", 1.0)
+        map = intent.getSerializableExtra("map") as HashMap<String, Double>
 
     }
 

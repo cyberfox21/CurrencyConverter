@@ -89,12 +89,10 @@ class MainActivity : Activity() {
             override fun onClick(v: View?) {
                 val toResultActivity = Intent(this@MainActivity, ResultActivity::class.java)
                 //if (a > b) a else b
-                intent.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
-                intent.putExtra("from", resultText)
-                intent.putExtra("map", map)
+                toResultActivity.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
+                toResultActivity.putExtra("from", resultText)
+                toResultActivity.putExtra("map", map)
 
-                //private var optionsList: HashMap<String, Double> = hashMapOf(map)
-                //toResultActivity.putExtra("map", map)
                 startActivity(toResultActivity)
 
 

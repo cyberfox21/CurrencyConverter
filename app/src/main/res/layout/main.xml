@@ -272,7 +272,7 @@
                     android:visibility="invisible"
                     android:background="#00000000"
                     android:text="БОЛЬШЕ"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:drawableBottom="@drawable/ic_arrow_drop_down_black_24dp"
                     android:textSize="15dp" />
 
