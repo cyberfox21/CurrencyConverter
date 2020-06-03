@@ -14,6 +14,10 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.security.AccessController.getContext
 import kotlin.properties.Delegates
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MainActivity : Activity() {
 
@@ -30,7 +34,7 @@ class MainActivity : Activity() {
     private lateinit var spinnerTakeCurrency : Spinner
     private lateinit var spinnerGiveCurrency : Spinner
 
-    private lateinit var map : MutableMap<String, Double>
+    private lateinit var map : HashMap<String, Double>
 
     private var giveCurrency : Double = 0.0
     private var takeCurrency : Double = 0.0
@@ -85,14 +89,24 @@ class MainActivity : Activity() {
             override fun onClick(v: View?) {
                 val toResultActivity = Intent(this@MainActivity, ResultActivity::class.java)
                 //if (a > b) a else b
-//                intent.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
-//                intent.putExtra("from", resultText)
-//                intent.putExtra(SyncStateContract.Constants.STRINGS_MAP, map);
+                intent.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
+                intent.putExtra("from", resultText)
+                intent.putExtra("map", map)
+
+                //private var optionsList: HashMap<String, Double> = hashMapOf(map)
+                //toResultActivity.putExtra("map", map)
+                startActivity(toResultActivity)
+
+
+
+
+
+
 
                 // ПЕРЕДАТЬ САМ    MAP
 
 
-                startActivity(toResultActivity)
+                //startActivity(toResultActivity)
             }
         })
         spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -135,7 +149,7 @@ class MainActivity : Activity() {
             return text
         }
     }
-    fun getDictionary (request : String) : MutableMap<String, Double>{
+    fun getDictionary (request : String) : HashMap<String, Double>{
         val last = request.substringAfter("rates\": {")
         val beforeLast = last.substringBeforeLast("}")
         val afterLast = beforeLast.substringBeforeLast("}")
@@ -144,7 +158,7 @@ class MainActivity : Activity() {
         val someresult = dontfinalresult.replace("\"", "")
         val lstKeysValues: List<String> = someresult.split(",").map { it -> it.trim() }
 
-        val map = mutableMapOf<String, Double>()
+        val map = HashMap<String, Double>()
         for(i in 0 until lstKeysValues.size step 2){
             map[lstKeysValues.get(i)] = (lstKeysValues.get(i+1)).toDouble()
         }

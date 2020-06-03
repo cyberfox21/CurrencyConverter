@@ -28,7 +28,7 @@ class CardAdapter(private val cardList : List<Card>): RecyclerView.Adapter<CardA
     class CardViewHolder(itemview : View) : RecyclerView.ViewHolder (itemview){
         val fromText : TextView = itemview.fromText
         val fromAmount : TextView = itemview.fromAmount
-        val toText : TextView = itemview.toText
+        val toText : TextView = itemview.textViewResultAmount
         val toAmount : TextView = itemview.toAmount
     }
 }

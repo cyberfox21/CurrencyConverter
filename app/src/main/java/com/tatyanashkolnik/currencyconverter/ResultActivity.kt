@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.result_card.*
 class ResultActivity : Activity() {
 
     private lateinit var arrayString : Array<String>
-    private lateinit var map : Map<String, Double>
+    private lateinit var map : HashMap<String, Double>
     private lateinit var fromCurrency : String
     private var fromAmount : Double = 1.0
 
@@ -20,7 +20,7 @@ class ResultActivity : Activity() {
 
         //fromCurrency = intent.getStringExtra("from").toString()
         //fromAmount = intent.getDoubleExtra("quantity", 1.0)
-        //map =
+        //map = intent.getSerializableExtra("map") as HashMap<String, Double>
 
     }
 
