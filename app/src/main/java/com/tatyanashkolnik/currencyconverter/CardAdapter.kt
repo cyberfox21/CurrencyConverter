@@ -20,7 +20,7 @@ class CardAdapter(private val cardList : List<Card>): RecyclerView.Adapter<CardA
         holder.fromText.text = currentItem.fromText
         holder.fromAmount.text = currentItem.fromAmount.toString()
         holder.toText.text = currentItem.toText
-        holder.toAmount.text = currentItem.toAmount.toString()
+        holder.toAmount.text = currentItem.toAmount
     }
 
     override fun getItemCount() = cardList.size
