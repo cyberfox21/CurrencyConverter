@@ -1,21 +1,25 @@
 package com.tatyanashkolnik.currencyconverter
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Service
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
-import android.provider.SyncStateContract
-import android.text.Editable
-import android.text.TextWatcher
+import android.provider.Settings
 import android.view.View
 import android.widget.*
 import java.net.HttpURLConnection
 import java.net.URL
-import java.security.AccessController.getContext
-import kotlin.properties.Delegates
+import android.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 
 
@@ -49,19 +53,28 @@ class MainActivity : Activity() {
 
     private var resultText : String = ""
 
+    private var intentLTE : String = Settings.ACTION_SETTINGS
+
+    private var intentWIFI : String = Settings.ACTION_WIFI_SETTINGS
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(!isConnected()){
+            generateDialog()
+        }
+        else {
         setContentView(R.layout.main)
 
         spinnerTakeCurrency = findViewById(R.id.spinnerTakeCurrency)
         spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
-
         editTextTakeQuantity = findViewById(R.id.editTextTakeQuantity)  // ввод количества переводимой валюты
 
         textViewCourse = findViewById(R.id.textViewCourse)  // курс
 
         textViewEnter = findViewById(R.id.textViewEnter)  // внизу сколько ввели
-        textViewResultAmount = findViewById(R.id.textViewResultAmount)  // внизу сколько вывели TV результат перевода
+        textViewResultAmount =
+                findViewById(R.id.textViewResultAmount)  // внизу сколько вывели TV результат перевода
 
         textViewFrom = findViewById(R.id.textViewFrom)  // внизу из какой валюты переводим
         textViewTo = findViewById(R.id.textViewTo)  // внизу в какую валюту переводим
@@ -69,59 +82,139 @@ class MainActivity : Activity() {
         textViewFrom.text = defaultText
         textViewTo.text = defaultText
 
-        buttonResult = findViewById(R.id.buttonResult)
-        buttonMoreDetails = findViewById(R.id.buttonMoreDetails)
+            buttonResult = findViewById(R.id.buttonResult)
+            buttonMoreDetails = findViewById(R.id.buttonMoreDetails)
 
-        val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
-        map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
+            val url = resources.getString(R.string.URL_AND_TANIUSHIN_API_KEY)
+            map = getDictionary(AsyncTaskGetCurrentRatesJson().execute(url).get())
 
-        buttonResult.setOnClickListener(object: View.OnClickListener {
-            override fun onClick(v: View?) {
-                if(editTextTakeQuantity.text.toString().isEmpty()) {quantity = 1.0} // Если пользователь ничего не ввёл
-                else{quantity = editTextTakeQuantity.text.toString().toDouble()}
-                textViewEnter.text = quantity.toString()
-                calculatedResult = calculateAmount(takeCurrency, giveCurrency, quantity, isFromUSD, isToUSD)
-                textViewResultAmount.text = String.format("%.2f", calculatedResult)
-                buttonMoreDetails.visibility = View.VISIBLE
-            }
-        })
-        buttonMoreDetails.setOnClickListener(object: View.OnClickListener {
-            override fun onClick(v: View?) {
-                val toResultActivity = Intent(this@MainActivity, ResultActivity::class.java)
-                //if (a > b) a else b
-                toResultActivity.putExtra("quantity", if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble())
-                toResultActivity.putExtra("from", resultText)
-                toResultActivity.putExtra("map", map)
-                startActivity(toResultActivity)
-            }
-        })
-        spinnerTakeCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                resultText = returnTextToRequest(parent?.getItemAtPosition(position).toString())
-                if (resultText == "USD") {isFromUSD = true}
-                else {isFromUSD = false}
-                takeCurrency = getRequestToDictionary(resultText) // из какой валюты
-                Log.i("ResultActivity", "take" + takeCurrency.toString())
-                textViewFrom.text = returnTextToUser(resultText)
-                textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
-            }
+            buttonResult.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    if (editTextTakeQuantity.text.toString().isEmpty()) {
+                        quantity = 1.0
+                    } // Если пользователь ничего не ввёл
+                    else {
+                        quantity = editTextTakeQuantity.text.toString().toDouble()
+                    }
+                    textViewEnter.text = quantity.toString()
+                    calculatedResult =
+                        calculateAmount(
+                            takeCurrency,
+                            giveCurrency,
+                            quantity,
+                            isFromUSD,
+                            isToUSD
+                        )
+                    textViewResultAmount.text = String.format("%.2f", calculatedResult)
+                    buttonMoreDetails.visibility = View.VISIBLE
+                }
+            })
+            buttonMoreDetails.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    val toResultActivity = Intent(this@MainActivity, ResultActivity::class.java)
+                    //if (a > b) a else b
+                    toResultActivity.putExtra(
+                        "quantity",
+                        if (editTextTakeQuantity.text.toString().isEmpty()) 1.0 else editTextTakeQuantity.text.toString().toDouble()
+                    )
+                    toResultActivity.putExtra("from", resultText)
+                    toResultActivity.putExtra("map", map)
+                    startActivity(toResultActivity)
+                }
+            })
+            spinnerTakeCurrency.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        resultText =
+                            returnTextToRequest(parent?.getItemAtPosition(position).toString())
+                        if (resultText == "USD") {
+                            isFromUSD = true
+                        } else {
+                            isFromUSD = false
+                        }
+                        takeCurrency = getRequestToDictionary(resultText) // из какой валюты
+                        Log.i("ResultActivity", "take" + takeCurrency.toString())
+                        textViewFrom.text = returnTextToUser(resultText)
+                        textViewCourse.text = String.format(
+                            "%.2f",
+                            calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD)
+                        )
+                    }
+                }
+            spinnerGiveCurrency.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        var resultText: String =
+                            returnTextToRequest(parent?.getItemAtPosition(position).toString())
+                        if (resultText == "USD") {
+                            isToUSD = true
+                        } else {
+                            isToUSD = false
+                        }
+                        giveCurrency = getRequestToDictionary(resultText) // в какую валюту
+                        Log.i("ResultActivity", "give" + giveCurrency.toString())
+                        textViewTo.text = returnTextToUser(resultText)
+                        textViewCourse.text = String.format(
+                            "%.2f",
+                            calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD)
+                        )
+                    }
+                }
+            spinnerTakeCurrency.adapter = ArrayAdapter<String>(
+                this,
+                R.layout.spinner_item,
+                resources.getStringArray(R.array.list_of_сurrencies)
+            )
+            spinnerGiveCurrency.adapter = ArrayAdapter<String>(
+                this,
+                R.layout.spinner_item,
+                resources.getStringArray(R.array.list_of_сurrencies)
+            )
         }
-        spinnerGiveCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                var resultText: String = returnTextToRequest(parent?.getItemAtPosition(position).toString())
-                if (resultText == "USD") {isToUSD = true}
-                else {isToUSD = false}
-                giveCurrency = getRequestToDictionary(resultText) // в какую валюту
-                Log.i("ResultActivity", "give" + giveCurrency.toString())
-                textViewTo.text = returnTextToUser(resultText)
-                textViewCourse.text = String.format("%.2f", calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD))
-            }
-        }
-        spinnerTakeCurrency.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.list_of_сurrencies))
-        spinnerGiveCurrency.adapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(R.array.list_of_сurrencies))
     }
+
+    fun isConnected(): Boolean {
+        val connectionManager : ConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork : NetworkInfo? = connectionManager.activeNetworkInfo
+        val isConnected : Boolean = activeNetwork?.isConnectedOrConnecting == true
+        return isConnected
+    }
+
+    private fun generateDialog () {
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+        val buttonClickLTE = { _: DialogInterface, _: Int ->
+            val toLTESettings = Intent(intentLTE)
+            finish()
+            startActivity(toLTESettings)
+        }
+        val buttonClickWIFI = { _: DialogInterface, _: Int ->
+            val toWIFISettings = Intent(intentWIFI)
+            finish()
+            startActivity(toWIFISettings)
+        }
+        with(builder)
+        {
+            setTitle("Для работы приложения нужно подключение к сети.")
+            setMessage("Включить мобильный интернет и перезагрузить приложение?")
+            setCancelable(false)
+            setPositiveButton("Мобильный интернет", DialogInterface.OnClickListener(function = buttonClickLTE))
+            setNegativeButton("WIFI", DialogInterface.OnClickListener(function = buttonClickWIFI))
+            show()
+        }
+    }
+
     inner class AsyncTaskGetCurrentRatesJson : AsyncTask <String, String, String>() {
         override fun doInBackground(vararg url: String?): String {
             var text: String

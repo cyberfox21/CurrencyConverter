@@ -7,9 +7,11 @@
     app:cardCornerRadius="15dp"
     android:layout_height="wrap_content"
     ndroid:layout_marginTop="45dp"
+    android:clickable="true"
+    app:cardElevation="6dp"
     android:layout_marginBottom="30dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp" >
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
