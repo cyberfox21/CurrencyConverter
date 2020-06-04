@@ -75,7 +75,7 @@ class ResultActivity : Activity() {
         for (i in map){
             if (i.key == "USD") {toUSD = true}
             else {toUSD = false}
-            val item = Card(returnTextToUser(fromCurrency), fromAmount, returnTextToUser(i.key), String.format("%.2f",calculateAmount(fromAmount, i.value, amountToCalculate, fromUSD, toUSD)))
+            val item = Card(fromCurrency, fromAmount, i.key, String.format("%.2f",calculateAmount(fromAmount, i.value, amountToCalculate, fromUSD, toUSD)))
             list += item
         }
         return list
