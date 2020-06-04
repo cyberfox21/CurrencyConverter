@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ndroid="http://schemas.android.com/tools"
-    app:cardBackgroundColor="#27AE60"
+    app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="15dp"
     android:layout_height="wrap_content"
     ndroid:layout_marginTop="45dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="30dp"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp" >
 
@@ -33,10 +33,10 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="167"
-            android:textColor="#ffffff"
-            android:textSize="26dp"
+            android:textColor="#373737"
+            android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintEnd_toStartOf="@id/polosa2"
             app:layout_constraintTop_toTopOf="@id/const_2"
             />
@@ -45,10 +45,10 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:gravity="center"
-            android:background="#FFFFFF"
+            android:background="#373737"
             app:layout_constraintStart_toEndOf="@id/fromAmount"
             app:layout_constraintEnd_toStartOf="@id/toAmount"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="0.8"
             app:layout_constraintBottom_toBottomOf="@id/const_2"
             app:layout_constraintTop_toTopOf="@id/const_2" />
 
@@ -58,10 +58,10 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="2.38"
-            android:textColor="#ffffff"
-            android:textSize="26dp"
+            android:textColor="#373737"
+            android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toEndOf="@id/polosa2"
             app:layout_constraintTop_toTopOf="@id/const_2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,10 +81,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="RUB"
-            android:textColor="#EDEDED"
+            android:textColor="#676767"
             android:textSize="23dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintEnd_toStartOf="@id/textViewEnter"
             app:layout_constraintTop_toTopOf="@id/const_1"
 
@@ -100,7 +100,7 @@
             android:textColor="#ffffff"
             android:textSize="23dp"
             app:layout_constraintEnd_toStartOf="@id/textViewResultAmount"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="0.8"
             app:layout_constraintStart_toEndOf="@id/fromText"
             app:layout_constraintTop_toTopOf="@id/const_1" />
 
@@ -112,10 +112,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="USD"
-            android:textColor="#EDEDED"
+            android:textColor="#676767"
             android:textSize="23dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="2"
             app:layout_constraintStart_toEndOf="@+id/textViewEnter"
             app:layout_constraintTop_toTopOf="@id/const_1" />
     </androidx.constraintlayout.widget.ConstraintLayout>

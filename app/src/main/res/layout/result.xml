@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/gradient"
+    android:background="#27AE60"
     android:layout_height="match_parent">
 
     <TextView
@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/extended_result"
-        android:textColor="#A3A3A3"
+        android:textColor="#FFFFFF"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="28dp"
         app:layout_constraintVertical_weight="1"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="parent"

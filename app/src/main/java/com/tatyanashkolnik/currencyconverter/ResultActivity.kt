@@ -38,27 +38,15 @@ class ResultActivity : Activity() {
 
     }
     private fun getIntent (intent : Intent){
-        fromCurrency = intent.getStringExtra("from").toString() // 3 буквы
+        fromCurrency = intent.getStringExtra("from").toString()
         fromAmount = intent.getDoubleExtra("quantity", 1.0)
-        mapFromMainActivity = intent.getSerializableExtra("map") as HashMap<String, Double> // 3 буквы
+        mapFromMainActivity = intent.getSerializableExtra("map") as HashMap<String, Double>
         Log.i("Result", fromCurrency)
     }
     private fun deleteNecessaryItem (delete : String, dictionary : HashMap<String, Double>) : HashMap<String, Double>{
-        amountToCalculate = dictionary.get(delete)!!
+        amountToCalculate = dictionary[delete]!!
         dictionary.remove(delete)
         return dictionary
-    }
-    fun returnTextToUser (string : String) : String {
-        var result : String = ""
-        when (string) {
-            "RUB" -> result = "Рубль"
-            "USD"-> result = "Доллар"
-            "EUR" -> result = "Евро"
-            "GBP" -> result = "Фунт"
-            "CNY" -> result = "Юань"
-            "UAH" -> result = "Гривна"
-        }
-        return result
     }
     fun calculateAmount (from : Double, to : Double, quantity : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
         var result : Double
@@ -70,12 +58,12 @@ class ResultActivity : Activity() {
     }
     private fun generateList(size : Int) : List<Card> {
         if(fromCurrency == "USD") {fromUSD = true}
-        var toUSD : Boolean = false
+        var toUSD = false
         val list = ArrayList<Card>()
         for (i in map){
-            if (i.key == "USD") {toUSD = true}
+            if (i.key == "USD" && fromUSD == false) {toUSD = true}
             else {toUSD = false}
-            val item = Card(fromCurrency, fromAmount, i.key, String.format("%.2f",calculateAmount(fromAmount, i.value, amountToCalculate, fromUSD, toUSD)))
+            val item = Card(fromCurrency, fromAmount, i.key, String.format("%.2f", calculateAmount(amountToCalculate, i.value, fromAmount, fromUSD, toUSD)))
             list += item
         }
         return list
