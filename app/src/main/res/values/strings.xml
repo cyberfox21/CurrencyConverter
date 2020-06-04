@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Currency Converter</string>
+    <string name="app_name">Converter</string>
     <string name="URL_AND_TANIUSHIN_API_KEY">https://openexchangerates.org/api/latest.json?app_id=dd182aaa13c14ecd9bcccc4c4b2f4527</string>
     <string-array name="list_of_сurrencies">
         <item>Рубль</item>
