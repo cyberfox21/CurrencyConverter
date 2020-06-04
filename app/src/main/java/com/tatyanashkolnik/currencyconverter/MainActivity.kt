@@ -20,68 +20,64 @@ import android.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
-
-
-
 class MainActivity : Activity() {
 
-    private lateinit var editTextTakeQuantity : EditText
-    private lateinit var textViewResultAmount : TextView
-    private lateinit var textViewEnter : TextView
-    private lateinit var textViewCourse : TextView
-    private lateinit var textViewFrom : TextView
-    private lateinit var textViewTo : TextView
+    private lateinit var editTextTakeQuantity: EditText
+    private lateinit var textViewResultAmount: TextView
+    private lateinit var textViewEnter: TextView
+    private lateinit var textViewCourse: TextView
+    private lateinit var textViewFrom: TextView
+    private lateinit var textViewTo: TextView
 
-    private lateinit var buttonResult : Button
-    private lateinit var buttonMoreDetails : Button
+    private lateinit var buttonResult: Button
+    private lateinit var buttonMoreDetails: Button
 
-    private lateinit var spinnerTakeCurrency : Spinner
-    private lateinit var spinnerGiveCurrency : Spinner
+    private lateinit var spinnerTakeCurrency: Spinner
+    private lateinit var spinnerGiveCurrency: Spinner
 
-    private lateinit var map : HashMap<String, Double>
+    private lateinit var map: HashMap<String, Double>
 
-    private var giveCurrency : Double = 0.0
-    private var takeCurrency : Double = 0.0
+    private var giveCurrency: Double = 0.0
+    private var takeCurrency: Double = 0.0
 
-    private var calculatedResult : Double = 0.0
-    private var quantity : Double = 1.0
+    private var calculatedResult: Double = 0.0
+    private var quantity: Double = 1.0
 
-    private var isFromUSD : Boolean = false
-    private var isToUSD : Boolean = false
+    private var isFromUSD: Boolean = false
+    private var isToUSD: Boolean = false
 
-    private var defaultText : String = "Рубль"
+    private var defaultText: String = "Рубль"
 
-    private var resultText : String = ""
+    private var resultText: String = ""
 
-    private var intentLTE : String = Settings.ACTION_SETTINGS
+    private var intentLTE: String = Settings.ACTION_DATA_ROAMING_SETTINGS
 
-    private var intentWIFI : String = Settings.ACTION_WIFI_SETTINGS
+    private var intentWIFI: String = Settings.ACTION_WIFI_SETTINGS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(!isConnected()){
+        if (!isConnected()) {
             generateDialog()
-        }
-        else {
-        setContentView(R.layout.main)
+        } else {
+            setContentView(R.layout.main)
 
-        spinnerTakeCurrency = findViewById(R.id.spinnerTakeCurrency)
-        spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
-        editTextTakeQuantity = findViewById(R.id.editTextTakeQuantity)  // ввод количества переводимой валюты
+            spinnerTakeCurrency = findViewById(R.id.spinnerTakeCurrency)
+            spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
+            editTextTakeQuantity =
+                findViewById(R.id.editTextTakeQuantity)  // ввод количества переводимой валюты
 
-        textViewCourse = findViewById(R.id.textViewCourse)  // курс
+            textViewCourse = findViewById(R.id.textViewCourse)  // курс
 
-        textViewEnter = findViewById(R.id.textViewEnter)  // внизу сколько ввели
-        textViewResultAmount =
+            textViewEnter = findViewById(R.id.textViewEnter)  // внизу сколько ввели
+            textViewResultAmount =
                 findViewById(R.id.textViewResultAmount)  // внизу сколько вывели TV результат перевода
 
-        textViewFrom = findViewById(R.id.textViewFrom)  // внизу из какой валюты переводим
-        textViewTo = findViewById(R.id.textViewTo)  // внизу в какую валюту переводим
+            textViewFrom = findViewById(R.id.textViewFrom)  // внизу из какой валюты переводим
+            textViewTo = findViewById(R.id.textViewTo)  // внизу в какую валюту переводим
 
-        textViewFrom.text = defaultText
-        textViewTo.text = defaultText
-
+            textViewFrom.text = defaultText
+            textViewTo.text = defaultText
             buttonResult = findViewById(R.id.buttonResult)
             buttonMoreDetails = findViewById(R.id.buttonMoreDetails)
 
@@ -186,13 +182,14 @@ class MainActivity : Activity() {
     }
 
     fun isConnected(): Boolean {
-        val connectionManager : ConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork : NetworkInfo? = connectionManager.activeNetworkInfo
-        val isConnected : Boolean = activeNetwork?.isConnectedOrConnecting == true
+        val connectionManager: ConnectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectionManager.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
         return isConnected
     }
 
-    private fun generateDialog () {
+    private fun generateDialog() {
         val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
         val buttonClickLTE = { _: DialogInterface, _: Int ->
             val toLTESettings = Intent(intentLTE)
@@ -209,26 +206,31 @@ class MainActivity : Activity() {
             setTitle("Для работы приложения нужно подключение к сети.")
             setMessage("Включить мобильный интернет и перезагрузить приложение?")
             setCancelable(false)
-            setPositiveButton("Мобильный интернет", DialogInterface.OnClickListener(function = buttonClickLTE))
+            setPositiveButton(
+                "Мобильный интернет",
+                DialogInterface.OnClickListener(function = buttonClickLTE)
+            )
             setNegativeButton("WIFI", DialogInterface.OnClickListener(function = buttonClickWIFI))
             show()
         }
     }
 
-    inner class AsyncTaskGetCurrentRatesJson : AsyncTask <String, String, String>() {
+    inner class AsyncTaskGetCurrentRatesJson : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg url: String?): String {
             var text: String
             val connection = URL(url[0]).openConnection() as HttpURLConnection
             try {
                 connection.connect()
-                text = connection.inputStream.use { it.reader().use { reader -> reader.readText() } }
+                text =
+                    connection.inputStream.use { it.reader().use { reader -> reader.readText() } }
             } finally {
                 connection.disconnect()
             }
             return text
         }
     }
-    fun getDictionary (request : String) : HashMap<String, Double>{
+
+    fun getDictionary(request: String): HashMap<String, Double> {
         val last = request.substringAfter("rates\": {")
         val beforeLast = last.substringBeforeLast("}")
         val afterLast = beforeLast.substringBeforeLast("}")
@@ -238,17 +240,19 @@ class MainActivity : Activity() {
         val lstKeysValues: List<String> = someresult.split(",").map { it -> it.trim() }
 
         val map = HashMap<String, Double>()
-        for(i in 0 until lstKeysValues.size step 2){
-            map[lstKeysValues.get(i)] = (lstKeysValues.get(i+1)).toDouble()
+        for (i in 0 until lstKeysValues.size step 2) {
+            map[lstKeysValues.get(i)] = (lstKeysValues.get(i + 1)).toDouble()
         }
         return map
     }
-    fun getRequestToDictionary (text : String) : Double {
-        var result : Double = map.getValue(text)
+
+    fun getRequestToDictionary(text: String): Double {
+        var result: Double = map.getValue(text)
         return result
     }
-    fun returnTextToRequest (string : String) : String {
-        var result : String = ""
+
+    fun returnTextToRequest(string: String): String {
+        var result: String = ""
         when (string) {
             "Рубль" -> result = "RUB"
             "Доллар" -> result = "USD"
@@ -259,32 +263,51 @@ class MainActivity : Activity() {
         }
         return result
     }
-    fun returnTextToUser (string : String) : String {
-        var result : String = ""
+
+    fun returnTextToUser(string: String): String {
+        var result: String = ""
         when (string) {
-             "RUB" -> result = "Рубль"
-             "USD"-> result = "Доллар"
-             "EUR" -> result = "Евро"
-             "GBP" -> result = "Фунт"
-             "CNY" -> result = "Юань"
-             "UAH" -> result = "Гривна"
+            "RUB" -> result = "Рубль"
+            "USD" -> result = "Доллар"
+            "EUR" -> result = "Евро"
+            "GBP" -> result = "Фунт"
+            "CNY" -> result = "Юань"
+            "UAH" -> result = "Гривна"
         }
         return result
     }
-    fun calculateAmount (from : Double, to : Double, quantity : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
-        var result : Double
-        if(from == to) {result = quantity}
-        else if(fromUSD == true) {result = quantity * to}
-        else if(toUSD == true) {result = quantity * (1 / from)}
-        else {result = quantity * (1 / from) * to}
+
+    fun calculateAmount(
+        from: Double,
+        to: Double,
+        quantity: Double,
+        fromUSD: Boolean,
+        toUSD: Boolean
+    ): Double {
+        var result: Double
+        if (from == to) {
+            result = quantity
+        } else if (fromUSD == true) {
+            result = quantity * to
+        } else if (toUSD == true) {
+            result = quantity * (1 / from)
+        } else {
+            result = quantity * (1 / from) * to
+        }
         return result
     }
-    fun calculateCourse (from: Double, to : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
-        var result : Double
-        if(from == to) {result = 1.00}
-        else if(fromUSD == true) {result = to}
-        else if(toUSD == true) {result = 1 * (1 / from)}
-        else {result = 1 * (1 / from) * to}
+
+    fun calculateCourse(from: Double, to: Double, fromUSD: Boolean, toUSD: Boolean): Double {
+        var result: Double
+        if (from == to) {
+            result = 1.00
+        } else if (fromUSD == true) {
+            result = to
+        } else if (toUSD == true) {
+            result = 1 * (1 / from)
+        } else {
+            result = 1 * (1 / from) * to
+        }
         return result
     }
 }
