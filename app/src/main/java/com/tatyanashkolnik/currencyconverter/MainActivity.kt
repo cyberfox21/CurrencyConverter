@@ -63,6 +63,7 @@ class MainActivity : Activity() {
             spinnerGiveCurrency = findViewById(R.id.spinnerGiveCurrency)
             editTextTakeQuantity =
                 findViewById(R.id.editTextTakeQuantity)  // ввод количества переводимой валюты
+            editTextTakeQuantity.maxLines = 1
 
             textViewCourse = findViewById(R.id.textViewCourse)  // курс
 
