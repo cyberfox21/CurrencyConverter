@@ -2,7 +2,6 @@ package com.tatyanashkolnik.currencyconverter
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Service
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -17,8 +16,6 @@ import android.widget.*
 import java.net.HttpURLConnection
 import java.net.URL
 import android.view.ContextThemeWrapper
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class MainActivity : Activity() {
 

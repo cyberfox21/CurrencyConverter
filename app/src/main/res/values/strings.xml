@@ -11,4 +11,17 @@
     </string-array>
     <string name="defaultText">Рубль</string>
     <string name="extended_result">Расширенный результат</string>
+    <string name="bank_take">Банк принимает</string>
+    <string name="bank_give">Банк отдаёт</string>
+    <string name="choose_currency">Выберите валюту</string>
+    <string name="current_course">Текущий курс</string>
+    <string name="result">Результат</string>
+    <string name="more">БОЛЬШЕ</string>
+    <string name="default_rub">RUB</string>
+    <string name="default_usd">USD</string>
+    <string name="enter_amount">Введите число</string>
+    <string name="converter">Конвертер</string>
+    <string name="default_usdAmount">2.38</string>
+    <string name="default_rubAmount">167</string>
+    <string name="developers_names">Created by TSIB</string>
 </resources>

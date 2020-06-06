@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Конвертер"
+            android:text="@string/converter"
             android:textColor="#ffffff"
             android:textSize="27dp" />
     </LinearLayout>
@@ -51,7 +51,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Банк принимает"
+                android:text="@string/bank_take"
                 android:textColor="#A3A3A3"
                 android:textSize="25dp" />
 
@@ -75,7 +75,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Выберите валюту"
+                        android:text="@string/choose_currency"
                         android:textColor="#000000"
                         android:textSize="20dp" />
 
@@ -98,7 +98,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Введите число"
+                        android:text="@string/enter_amount"
                         android:textColor="#000000"
                         android:textSize="20dp" />
 
@@ -122,7 +122,7 @@
                 android:layout_weight="1"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="Банк отдаёт"
+                android:text="@string/bank_give"
                 android:textColor="#A3A3A3"
                 android:textSize="25dp" />
 
@@ -148,7 +148,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Выберите валюту"
+                    android:text="@string/choose_currency"
                     android:textColor="#000000"
                     android:textSize="20dp" />
 
@@ -171,7 +171,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Текущий курс"
+                    android:text="@string/current_course"
                     android:textColor="#000000"
                     android:textSize="20dp" />
 
@@ -202,7 +202,7 @@
             android:layout_gravity="center"
             android:background="@drawable/style_7"
             android:layout_marginBottom="20dp"
-            android:text="      Результат      "
+            android:text="@string/result"
             android:textColor="#FFFFFF"
             android:textSize="15dp" />
 
@@ -224,7 +224,7 @@
                     android:textSize="26dp" />
 
                 <TextView
-                    android:id="@+id/polosa"
+                    android:id="@+id/devider_main"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="center_vertical"
@@ -259,7 +259,7 @@
                     android:layout_gravity="top"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="RUB"
+                    android:text="@string/default_rub"
                     android:textColor="#676767"
                     android:textSize="20dp" />
                 <Button
@@ -271,7 +271,7 @@
                     android:gravity="center"
                     android:visibility="invisible"
                     android:background="#00000000"
-                    android:text="БОЛЬШЕ"
+                    android:text="@string/more"
                     android:textColor="#000000"
                     android:drawableBottom="@drawable/ic_arrow_drop_down_black_24dp"
                     android:textSize="15dp" />
@@ -283,7 +283,7 @@
                     android:layout_gravity="top"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="USD"
+                    android:text="@string/default_usd"
                     android:textColor="#676767"
                     android:textSize="20dp" />
 

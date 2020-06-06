@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.result.*
-import kotlinx.android.synthetic.main.result_card.*
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -30,7 +28,7 @@ class ResultActivity : Activity() {
         getIntent(intent)
         map = deleteNecessaryItem(fromCurrency, mapFromMainActivity)
 
-        listOfCards = generateList(map.size)
+        listOfCards = generateList()
 
         listOfResults.adapter = CardAdapter(listOfCards)
         listOfResults.layoutManager = LinearLayoutManager(this)
@@ -56,7 +54,7 @@ class ResultActivity : Activity() {
         else {result = quantity * (1 / from) * to}
         return result
     }
-    private fun generateList(size : Int) : List<Card> {
+    private fun generateList() : List<Card> {
         if(fromCurrency == "USD") {fromUSD = true}
         var toUSD = false
         val list = ArrayList<Card>()
