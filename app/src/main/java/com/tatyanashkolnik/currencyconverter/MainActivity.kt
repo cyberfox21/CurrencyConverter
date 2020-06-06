@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.tatyanashkolnik.currencyconverter
 
 import android.app.Activity
@@ -17,6 +19,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import android.view.ContextThemeWrapper
 
+@Suppress("DEPRECATION")
 class MainActivity : Activity() {
 
     private lateinit var editTextTakeQuantity: EditText
