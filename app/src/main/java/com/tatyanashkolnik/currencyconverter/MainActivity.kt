@@ -178,7 +178,6 @@ class MainActivity : Activity() {
             )
         }
     }
-
     fun isConnected(): Boolean {
         val connectionManager: ConnectivityManager =
             this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
