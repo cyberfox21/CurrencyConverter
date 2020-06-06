@@ -201,14 +201,14 @@ class MainActivity : Activity() {
         }
         with(builder)
         {
-            setTitle("Для работы приложения нужно подключение к сети.")
-            setMessage("Включить мобильный интернет и перезагрузить приложение?")
+            setTitle(getString(R.string.dialog_title))
+            setMessage(getString(R.string.dialog_message))
             setCancelable(false)
             setPositiveButton(
-                "Мобильный интернет",
+                getString(R.string.dialog_positive),
                 DialogInterface.OnClickListener(function = buttonClickLTE)
             )
-            setNegativeButton("WIFI", DialogInterface.OnClickListener(function = buttonClickWIFI))
+            setNegativeButton(getString(R.string.dialog_negative), DialogInterface.OnClickListener(function = buttonClickWIFI))
             show()
         }
     }

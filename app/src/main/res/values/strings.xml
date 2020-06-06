@@ -24,4 +24,8 @@
     <string name="default_usdAmount">2.38</string>
     <string name="default_rubAmount">167</string>
     <string name="developers_names">Created by TSIB</string>
+    <string name="dialog_title">Для работы приложения нужно подключение к сети.</string>
+    <string name="dialog_message">Включить мобильный интернет и перезагрузить приложение?</string>
+    <string name="dialog_positive">Мобильный интернет</string>
+    <string name="dialog_negative">WIFI</string>
 </resources>
