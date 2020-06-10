@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
 import android.provider.Settings
+import android.text.InputType
 import android.view.View
 import android.widget.*
 import java.net.HttpURLConnection
