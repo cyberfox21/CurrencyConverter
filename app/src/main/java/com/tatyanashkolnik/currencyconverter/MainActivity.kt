@@ -19,6 +19,9 @@ import android.widget.*
 import java.net.HttpURLConnection
 import java.net.URL
 import android.view.ContextThemeWrapper
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @Suppress("DEPRECATION")
 class MainActivity : Activity() {
@@ -50,6 +53,9 @@ class MainActivity : Activity() {
     private var defaultText: String = "Рубль"
 
     private var resultText: String = ""
+
+    private var textFrom: String = ""
+    private var textTo: String = ""
 
     private var intentLTE: String = Settings.ACTION_DATA_ROAMING_SETTINGS
 
@@ -103,6 +109,14 @@ class MainActivity : Activity() {
                             isFromUSD,
                             isToUSD
                         )
+                    textViewFrom.text = declension(quantity, textFrom)
+
+                    Log.i("CHECKER", declension(quantity, textFrom))
+
+                    textViewTo.text = declension(calculatedResult, textTo)
+
+                    Log.i("CHECKER", declension(calculatedResult, textTo))
+
                     textViewResultAmount.text = String.format("%.2f", calculatedResult)
                     buttonMoreDetails.visibility = View.VISIBLE
                 }
@@ -139,6 +153,7 @@ class MainActivity : Activity() {
                         takeCurrency = getRequestToDictionary(resultText) // из какой валюты
                         Log.i("ResultActivity", "take" + takeCurrency.toString())
                         textViewFrom.text = returnTextToUser(resultText)
+                        textFrom = returnTextToUser(resultText)
                         textViewCourse.text = String.format(
                             "%.2f",
                             calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD)
@@ -164,6 +179,7 @@ class MainActivity : Activity() {
                         giveCurrency = getRequestToDictionary(resultText) // в какую валюту
                         Log.i("ResultActivity", "give" + giveCurrency.toString())
                         textViewTo.text = returnTextToUser(resultText)
+                        textTo = returnTextToUser(resultText)
                         textViewCourse.text = String.format(
                             "%.2f",
                             calculateCourse(takeCurrency, giveCurrency, isFromUSD, isToUSD)
@@ -182,7 +198,7 @@ class MainActivity : Activity() {
             )
         }
     }
-    fun isConnected(): Boolean {
+    private fun isConnected(): Boolean {
         val connectionManager: ConnectivityManager =
             this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = connectionManager.activeNetworkInfo
@@ -231,7 +247,7 @@ class MainActivity : Activity() {
         }
     }
 
-    fun getDictionary(request: String): HashMap<String, Double> {
+    private fun getDictionary(request: String): HashMap<String, Double> {
         val last = request.substringAfter("rates\": {")
         val beforeLast = last.substringBeforeLast("}")
         val afterLast = beforeLast.substringBeforeLast("}")
@@ -247,7 +263,7 @@ class MainActivity : Activity() {
         return map
     }
 
-    fun getRequestToDictionary(text: String): Double {
+    private fun getRequestToDictionary(text: String): Double {
         var result: Double = map.getValue(text)
         return result
     }
@@ -265,7 +281,7 @@ class MainActivity : Activity() {
         return result
     }
 
-    fun returnTextToUser(string: String): String {
+    private fun returnTextToUser(string: String): String {
         var result: String = ""
         when (string) {
             "RUB" -> result = "Рубль"
@@ -278,7 +294,7 @@ class MainActivity : Activity() {
         return result
     }
 
-    fun calculateAmount(
+    private fun calculateAmount(
         from: Double,
         to: Double,
         quantity: Double,
@@ -298,7 +314,7 @@ class MainActivity : Activity() {
         return result
     }
 
-    fun calculateCourse(from: Double, to: Double, fromUSD: Boolean, toUSD: Boolean): Double {
+    private fun calculateCourse(from: Double, to: Double, fromUSD: Boolean, toUSD: Boolean): Double {
         var result: Double
         if (from == to) {
             result = 1.00
@@ -309,6 +325,40 @@ class MainActivity : Activity() {
         } else {
             result = 1 * (1 / from) * to
         }
+        return result
+    }
+    private fun getArrayToDeclension() : ArrayList<WordForDeclension>{
+        val infinitive = ArrayList<String>(Arrays.asList(*resources.getStringArray
+            (R.array.list_of_сurrencies))) // именительный падеж
+        val genitive = ArrayList<String>(Arrays.asList(*resources.getStringArray
+            (R.array.list_of_сurrencies_1))) // родительный падеж
+        val plural = ArrayList<String>(Arrays.asList(*resources.getStringArray
+            (R.array.list_of_сurrencies_2))) // множественное число
+        var arrayOfDeclensions = ArrayList<WordForDeclension>()
+        for (i in 0 until infinitive.size) {
+            val item = WordForDeclension(infinitive.get(i), genitive.get(i), plural.get(i))
+            arrayOfDeclensions.add(item)
+        }
+        return arrayOfDeclensions
+    }
+    private fun declension(number : Double, word : String) : String{
+        var array : ArrayList<WordForDeclension> = getArrayToDeclension()
+        var num = number.toInt()
+        var numberCases = arrayOf(2, 0, 1, 1, 1, 2)
+        lateinit var result : String
+        for (i in 0 until array.size) {
+            if((array[i].infinitive).equals(word)){
+                var rightStringIndex = if (num % 100 > 4 && num % 100 < 20) 2
+                else numberCases[Math.min(num % 10, 5)]
+                result = when(rightStringIndex){
+                    0 -> array[i].infinitive
+                    1 -> array[i].genitive
+                    else -> array[i].plural
+                }
+                break
+            }
+        }
+        Log.i("CHECKER", "declension " + result)
         return result
     }
 }

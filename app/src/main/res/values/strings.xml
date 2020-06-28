@@ -9,6 +9,22 @@
         <item>Юань</item>
         <item>Гривна</item>
     </string-array>
+    <string-array name="list_of_сurrencies_1">
+        <item>Рубля</item>
+        <item>Доллара</item>
+        <item>Евро</item>
+        <item>Фунта</item>
+        <item>Юаня</item>
+        <item>Гривны</item>
+    </string-array>
+    <string-array name="list_of_сurrencies_2">
+        <item>Рублей</item>
+        <item>Долларов</item>
+        <item>Евро</item>
+        <item>Фунтов</item>
+        <item>Юаней</item>
+        <item>Гривен</item>
+    </string-array>
     <string name="defaultText">Рубль</string>
     <string name="extended_result">Расширенный результат</string>
     <string name="bank_take">Банк принимает</string>

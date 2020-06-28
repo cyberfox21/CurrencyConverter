@@ -46,7 +46,7 @@ class ResultActivity : Activity() {
         dictionary.remove(delete)
         return dictionary
     }
-    fun calculateAmount (from : Double, to : Double, quantity : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
+    private fun calculateAmount (from : Double, to : Double, quantity : Double, fromUSD : Boolean, toUSD : Boolean) : Double {
         var result : Double
         if(from == to) {result = quantity}
         else if(fromUSD == true) {result = quantity * to}
