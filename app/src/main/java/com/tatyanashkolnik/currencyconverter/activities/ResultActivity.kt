@@ -1,10 +1,13 @@
-package com.tatyanashkolnik.currencyconverter
+package com.tatyanashkolnik.currencyconverter.activities
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tatyanashkolnik.currencyconverter.R
+import com.tatyanashkolnik.currencyconverter.adapters.CardAdapter
+import com.tatyanashkolnik.currencyconverter.models.Card
 import kotlinx.android.synthetic.main.result.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -30,7 +33,10 @@ class ResultActivity : Activity() {
 
         listOfCards = generateList()
 
-        listOfResults.adapter = CardAdapter(listOfCards)
+        listOfResults.adapter =
+            CardAdapter(
+                listOfCards
+            )
         listOfResults.layoutManager = LinearLayoutManager(this)
         listOfResults.setHasFixedSize(true)
 
@@ -61,7 +67,15 @@ class ResultActivity : Activity() {
         for (i in map){
             if (i.key == "USD" && fromUSD == false) {toUSD = true}
             else {toUSD = false}
-            val item = Card(fromCurrency, fromAmount, i.key, String.format("%.2f", calculateAmount(amountToCalculate, i.value, fromAmount, fromUSD, toUSD)))
+            val item = Card(
+                fromCurrency,
+                fromAmount,
+                i.key,
+                String.format(
+                    "%.2f",
+                    calculateAmount(amountToCalculate, i.value, fromAmount, fromUSD, toUSD)
+                )
+            )
             list += item
         }
         return list

@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen"
+        <activity android:name=".activities.SplashScreen"
             android:screenOrientation="portrait"
             android:noHistory="true">
             <intent-filter>
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ResultActivity"
+            android:name=".activities.ResultActivity"
             android:theme="@style/AppTheme_2"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>

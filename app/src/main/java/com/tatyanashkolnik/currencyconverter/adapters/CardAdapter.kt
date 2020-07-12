@@ -1,17 +1,21 @@
-package com.tatyanashkolnik.currencyconverter
+package com.tatyanashkolnik.currencyconverter.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.tatyanashkolnik.currencyconverter.R
+import com.tatyanashkolnik.currencyconverter.models.Card
 import kotlinx.android.synthetic.main.result_card.view.*
 
 class CardAdapter(private val cardList : List<Card>): RecyclerView.Adapter<CardAdapter.CardViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.result_card, parent, false)
-        return CardViewHolder(itemView)
+        return CardViewHolder(
+            itemView
+        )
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {

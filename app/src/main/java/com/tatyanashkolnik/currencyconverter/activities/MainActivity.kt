@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.tatyanashkolnik.currencyconverter
+package com.tatyanashkolnik.currencyconverter.activities
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -13,12 +13,13 @@ import android.os.Bundle
 import android.util.Log
 import android.os.AsyncTask
 import android.provider.Settings
-import android.text.InputType
 import android.view.View
 import android.widget.*
 import java.net.HttpURLConnection
 import java.net.URL
 import android.view.ContextThemeWrapper
+import com.tatyanashkolnik.currencyconverter.R
+import com.tatyanashkolnik.currencyconverter.models.WordForDeclension
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -207,7 +208,9 @@ class MainActivity : Activity() {
     }
 
     private fun generateDialog() {
-        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
+        val builder = AlertDialog.Builder(ContextThemeWrapper(this,
+            R.style.AlertDialogCustom
+        ))
         val buttonClickLTE = { _: DialogInterface, _: Int ->
             val toLTESettings = Intent(intentLTE)
             finish()
@@ -336,7 +339,12 @@ class MainActivity : Activity() {
             (R.array.list_of_сurrencies_2))) // множественное число
         var arrayOfDeclensions = ArrayList<WordForDeclension>()
         for (i in 0 until infinitive.size) {
-            val item = WordForDeclension(infinitive.get(i), genitive.get(i), plural.get(i))
+            val item =
+                WordForDeclension(
+                    infinitive.get(i),
+                    genitive.get(i),
+                    plural.get(i)
+                )
             arrayOfDeclensions.add(item)
         }
         return arrayOfDeclensions
